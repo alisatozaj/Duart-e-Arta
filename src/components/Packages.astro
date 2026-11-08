@@ -1,0 +1,628 @@
+
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+const plans = [
+  { name: 'Class A', price: '75,000', note: 'Kujdes i plotë bazë' },
+  {
+    name: 'Class Excellent',
+    price: '95,000',
+    note: 'Zgjedhja për më shumë kujdes',
+    featured: true,
+  },
+  {
+    name: 'Class Premium',
+    price: '140,000',
+    note: 'Kujdes maksimal privat',
+  },
+];
+
+const features = [
+  { name: 'Banim / Fjetje', from: 0 },
+  { name: 'Ushqimi', from: 0 },
+  { name: 'Shërbimi personal', from: 0 },
+  { name: 'Shërbimi mjekësor', from: 0 },
+  { name: 'Shërbimi terapi', from: 1 },
+  { name: 'Shërbimi psikologji', from: 1 },
+  { name: 'Shërbimi argëtim', from: 1 },
+  { name: 'Banim privat', from: 2 },
+  { name: 'Shërbimi juridik', from: 2 },
+  { name: 'Shërbimi spitalor', from: 2 },
+];
+---
+
+<section class="section packages-section" id="paketat">
+  <div class="container">
+
+    <header class="packages-header">
+      <p class="eyebrow">Paketat</p>
+      <h2>Paketat e shërbimeve</h2>
+      <p class="packages-intro">
+        Zgjidhni paketën që përshtatet më mirë me nevojat tuaja.
+      </p>
+    </header>
+
+    <!-- Desktop comparison table -->
+    <div class="desktop-comparison">
+      <div class="comparison-table">
+
+        <div class="table-header">
+          <div class="service-heading">
+            <span class="service-heading-title">Shërbimet</span>
+            <span class="service-heading-note">Krahasimi i paketave</span>
+          </div>
+
+          {plans.map((plan) => (
+            <div class:list={['plan-heading', { featured: plan.featured }]}>
+              <div class="plan-title-line">
+                <span class="plan-name">{plan.name}</span>
+                {plan.featured && (
+                  <span class="recommended-label">Rekomanduar</span>
+                )}
+              </div>
+
+              <div class="plan-price">
+                {plan.price}
+                <small>Lek</small>
+              </div>
+
+              <span class="plan-period">Në muaj</span>
+              <p class="plan-note">{plan.note}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="table-body">
+          {features.map((feature) => (
+            <div class="feature-row">
+              <div class="feature-name">{feature.name}</div>
+
+              {plans.map((plan, i) => (
+                <div class:list={['feature-cell', { featured: plan.featured }]}>
+                  {i >= feature.from ? (
+                    <>
+                      <Icon name="check" size={19} strokeWidth={2.2} />
+                      <span class="sr-only">Përfshihet</span>
+                    </>
+                  ) : (
+                    <>
+                      <span class="not-included" aria-hidden="true">—</span>
+                      <span class="sr-only">Nuk përfshihet</span>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile package cards -->
+    <div class="mobile-packages">
+      {plans.map((plan, i) => (
+        <article class:list={['mobile-plan', { 'mobile-plan-featured': plan.featured }]}>
+
+          <div class="mobile-plan-top">
+            <div class="mobile-plan-title">
+              <span class="mobile-plan-number">0{i + 1}</span>
+              <h3>{plan.name}</h3>
+            </div>
+
+            {plan.featured && (
+              <span class="mobile-recommended">Rekomanduar</span>
+            )}
+          </div>
+
+          <div class="mobile-price">
+            <span>{plan.price}</span>
+            <small>Lek / muaj</small>
+          </div>
+
+          <p class="mobile-note">{plan.note}</p>
+
+          <div class="mobile-divider"></div>
+
+          <p class="included-heading">Shërbimet e përfshira</p>
+
+          <ul class="mobile-feature-list">
+            {features.filter((feature) => i >= feature.from).map((feature) => (
+              <li>
+                <Icon name="check" size={17} strokeWidth={2.2} />
+                <span>{feature.name}</span>
+              </li>
+            ))}
+          </ul>
+
+          <a href="#kontakt" class="mobile-plan-link">
+            Na kontaktoni
+            <Icon name="arrow-right" size={17} />
+          </a>
+
+        </article>
+      ))}
+    </div>
+
+    <!-- Contact note -->
+    <div class="packages-footer">
+      <Icon name="heart" size={19} />
+      <p>
+        Nuk jeni të sigurt? 
+        <a href={site.phoneHref}>Na telefononi</a>
+        dhe do t'ju ndihmojmë të gjeni zgjidhjen e duhur.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* =====================================
+     SECTION
+  ===================================== */
+
+  .packages-section {
+    background: var(--bg);
+  }
+
+  .packages-header {
+    max-width: 650px;
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+    text-align: center;
+  }
+
+  .packages-header .eyebrow {
+    justify-content: center;
+  }
+
+  .packages-header h2 {
+    margin-bottom: 1rem;
+  }
+
+  .packages-intro {
+    max-width: 520px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* =====================================
+     DESKTOP TABLE
+  ===================================== */
+
+  .desktop-comparison {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .comparison-table {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .table-header,
+  .table-body {
+    display: contents;
+  }
+
+  /* Header cells */
+
+  .service-heading,
+  .plan-heading {
+    min-width: 0;
+    min-height: 190px;
+    padding: 2rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .service-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-left: 1.75rem;
+  }
+
+  .service-heading-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .service-heading-note {
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .plan-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    border-left: 1px solid var(--line);
+    position: relative;
+  }
+
+  .plan-heading.featured {
+    background: var(--blue-50);
+    border-top: 3px solid var(--gold-500);
+  }
+
+  /* All package names stay aligned */
+
+  .plan-title-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    min-height: 30px;
+    width: 100%;
+  }
+
+  .plan-name {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  .recommended-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.45rem;
+    border-radius: 3px;
+    background: rgba(224, 162, 27, 0.13);
+    color: #9b701b;
+    font-size: 0.62rem;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.35rem;
+    margin-top: 1rem;
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .plan-price small {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .plan-period {
+    margin-top: 0.3rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  .plan-note {
+    min-height: 2.5rem;
+    margin: 0.85rem 0 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* =====================================
+     FEATURE ROWS
+  ===================================== */
+
+  .feature-row {
+    display: contents;
+  }
+
+  .feature-name,
+  .feature-cell {
+    display: flex;
+    align-items: center;
+    min-height: 57px;
+    padding: 0.8rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .feature-name {
+    padding-left: 1.75rem;
+    color: var(--ink);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .feature-cell {
+    justify-content: center;
+    border-left: 1px solid var(--line);
+  }
+
+  .feature-cell.featured {
+    background: var(--blue-50);
+  }
+
+  .feature-cell :global(svg) {
+    color: var(--blue-700);
+  }
+
+  .not-included {
+    color: #b9c1ca;
+    font-size: 1.1rem;
+  }
+
+  /* =====================================
+     CONTACT NOTE
+  ===================================== */
+
+  .packages-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 2.25rem;
+  }
+
+  .packages-footer :global(svg) {
+    flex: none;
+    color: var(--gold-500);
+  }
+
+  .packages-footer p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .packages-footer a {
+    color: var(--blue-700);
+    font-weight: 600;
+    border-bottom: 1px solid var(--gold-500);
+  }
+
+  /* =====================================
+     MOBILE CARDS
+  ===================================== */
+
+  .mobile-packages {
+    display: none;
+  }
+
+  @media (max-width: 850px) {
+    .comparison-table {
+      grid-template-columns: minmax(0, 1.1fr) repeat(3, minmax(0, 1fr));
+    }
+
+    .service-heading,
+    .plan-heading {
+      padding-inline: 0.85rem;
+    }
+
+    .service-heading {
+      padding-left: 1.1rem;
+    }
+
+    .feature-name,
+    .feature-cell {
+      padding-inline: 0.85rem;
+    }
+
+    .feature-name {
+      padding-left: 1.1rem;
+    }
+
+    .plan-name {
+      font-size: 0.9rem;
+    }
+
+    .plan-price {
+      font-size: 1.65rem;
+    }
+
+    .recommended-label {
+      font-size: 0.58rem;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .packages-header {
+      margin-bottom: 2.25rem;
+      text-align: left;
+    }
+
+    .packages-header .eyebrow {
+      justify-content: flex-start;
+    }
+
+    .packages-header h2 {
+      font-size: clamp(2rem, 7vw, 2.5rem);
+    }
+
+    .packages-intro {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .desktop-comparison {
+      display: none;
+    }
+
+    .mobile-packages {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .mobile-plan {
+      min-width: 0;
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    .mobile-plan-featured {
+      background: var(--blue-50);
+      border: 1px solid var(--blue-700);
+    }
+
+    .mobile-plan-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .mobile-plan-number {
+      display: block;
+      margin-bottom: 0.45rem;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+
+    .mobile-plan h3 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+
+    .mobile-recommended {
+      padding: 0.3rem 0.55rem;
+      border: 1px solid rgba(224, 162, 27, 0.6);
+      border-radius: 3px;
+      color: #9b701b;
+      font-size: 0.63rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .mobile-price {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .mobile-price span {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+
+    .mobile-price small {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .mobile-note {
+      margin: 0.3rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .mobile-divider {
+      height: 1px;
+      margin: 1.25rem 0;
+      background: var(--line);
+    }
+
+    .included-heading {
+      margin: 0 0 0.9rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .mobile-feature-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem 0.65rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mobile-feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+      min-width: 0;
+      color: var(--ink);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .mobile-feature-list :global(svg) {
+      flex: none;
+      margin-top: 0.12rem;
+      color: var(--blue-700);
+    }
+
+    .mobile-plan-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--blue-700);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .packages-footer {
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin-top: 2rem;
+    }
+
+    .packages-footer p {
+      font-size: 0.87rem;
+      line-height: 1.6;
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .mobile-plan {
+      padding: 1.2rem;
+    }
+
+    .mobile-feature-list {
+      grid-template-columns: 1fr;
+    }
+
+    .mobile-price span {
+      font-size: 1.8rem;
+    }
+  }
+</style>

@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageBanner from '../components/PageBanner.astro';
+import Icon from '../components/Icon.astro';
+import Cta from '../components/Cta.astro';
+import { plans, features } from '../data/packages';
+
+// TODO: change these steps to match how the center really admits residents.
+const steps = [
+  { title: 'Na kontaktoni', text: 'Na telefononi ose plotësoni formularin e shkurtër.' },
+  { title: 'Vizita në qendër', text: 'Njiheni me ambientin dhe me ekipin.' },
+  { title: 'Zgjedhja e paketës', text: 'Bashkë zgjedhim paketën që i përshtatet nevojave të banorit.' },
+  { title: 'Pranimi', text: 'Organizojmë ardhjen e banorit në qendër.' },
+];
+---
+
+<Layout
+  title="Paketat – Qendra e Kujdesit Duart e Arta"
+  description="Paketat mujore të kujdesit në Qendrën Duart e Arta: Class A, Class Excellent dhe Class Premium."
+>
+  <PageBanner
+    image="/about-1.jpg"
+    eyebrow="Paketat"
+    title="Paketat e shërbimeve"
+    lead="Çmime të qarta mujore dhe shërbimet që përfshin secila paketë."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="plans">
+        {plans.map((plan, planIndex) => (
+          <article class:list={['plan', { featured: plan.featured }]}>
+            {plan.featured && <span class="badge">Më e preferuara</span>}
+            <h2>{plan.name}</h2>
+            <p class="note">{plan.note}</p>
+            <p class="price">{plan.price} <small>Lek / muaj</small></p>
+            <p class="audience">{plan.audience}</p>
+
+            <ul class="included">
+              {features
+                .filter((feature) => planIndex >= feature.from)
+                .map((feature) => (
+                  <li>
+                    <Icon name="check" size={18} strokeWidth={2.2} />
+                    {feature.name}
+                  </li>
+                ))}
+            </ul>
+
+            <a href="/#kontakt" class:list={['btn', plan.featured ? 'btn-primary' : 'btn-outline']}>
+              Zgjidh {plan.name}
+            </a>
+          </article>
+        ))}
+      </div>
+      <p class="monthly">Të gjitha çmimet janë mujore.</p>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <h2 class="steps-title">Si fillon</h2>
+      <ol class="steps">
+        {steps.map(({ title, text }, i) => (
+          <li>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <Cta plain />
+</Layout>
+
+<style>
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+  .plan {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 2.25rem 2rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+  .plan.featured {
+    border: 2px solid var(--blue-700);
+    background: var(--tint);
+  }
+  .badge {
+    position: absolute;
+    top: -0.8rem;
+    left: 2rem;
+    padding: 0.25rem 0.8rem;
+    border-radius: 99px;
+    background: var(--gold-500);
+    color: var(--ink);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .plan h2 {
+    font-size: 1.35rem;
+  }
+  .note {
+    margin: 0.3rem 0 1.5rem;
+    font-size: 0.93rem;
+    color: var(--muted);
+  }
+  .price {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: 2.3rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .price small {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--muted);
+  }
+  .audience {
+    margin: 0 0 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.97rem;
+  }
+  .included {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .included li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.97rem;
+  }
+  .included :global(svg) {
+    flex: none;
+    color: var(--blue-700);
+  }
+  .plan .btn {
+    margin-top: auto;
+  }
+  .monthly {
+    margin: 1.5rem 0 0;
+    text-align: center;
+    font-size: 0.93rem;
+    color: var(--muted);
+  }
+
+  .steps-title {
+    margin-bottom: 2.5rem;
+  }
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem clamp(1.5rem, 4vw, 3rem);
+  }
+  .steps li {
+    padding-top: 1.5rem;
+    border-top: 1px solid #cbd6e4;
+  }
+  .num {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--blue-700);
+  }
+  .steps h3 {
+    margin-bottom: 0.4rem;
+    font-size: 1.15rem;
+  }
+  .steps p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.97rem;
+  }
+
+  @media (max-width: 960px) {
+    .plans {
+      grid-template-columns: 1fr;
+      max-width: 30rem;
+      margin-inline: auto;
+      gap: 2rem;
+    }
+    .steps {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

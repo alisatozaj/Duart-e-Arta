@@ -1,0 +1,166 @@
+
+---
+import Icon from './Icon.astro';
+
+const features = [
+  { icon: 'heart', title: 'Kujdes me përkushtim' },
+  { icon: 'home', title: 'Ambient familjar' },
+  { icon: 'user', title: 'Respekt për çdo individ' },
+] as const;
+---
+
+<section class="section" id="rreth-nesh">
+  <div class="container about-grid">
+
+    <div class="photo-wrapper">
+      <img
+        class="photo"
+        src="/about-1.jpg"
+        alt="Banorë dhe staf të Qendrës Duart e Arta"
+        width="800"
+        height="800"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="about-text">
+      <p class="eyebrow">Rreth nesh</p>
+
+      <h2>Më shumë se një vendqëndrim. Një shtëpi e dytë.</h2>
+
+      <p>
+        Duart e Arta është një qendër kujdesi për të moshuarit, ku çdo banor merr
+        mbështetjen që i nevojitet në një ambient të qetë dhe të sigurt.
+      </p>
+
+      <p>
+        Respektojmë zakonet dhe ritmin e secilit. Familjarët janë pjesë e
+        kujdesit, dhe punojmë së bashku me ta për të kuptuar çfarë i nevojitet
+        çdo personi.
+      </p>
+
+      <ul class="features">
+        {features.map(({ icon, title }) => (
+          <li>
+            <Icon name={icon} size={26} />
+            <span>{title}</span>
+          </li>
+        ))}
+      </ul>
+
+      <a href="#sherbimet" class="text-link">
+        Shihni shërbimet tona
+        <Icon name="arrow-right" size={18} strokeWidth={2} />
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  /* Large square image wrapper */
+  .photo-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  .photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .about-text h2 {
+    margin-bottom: 1.5rem;
+    max-width: 14em;
+  }
+
+  .about-text > p:not(.eyebrow) {
+    color: var(--muted);
+    max-width: 34rem;
+    margin: 0 0 1rem;
+  }
+
+  .features {
+    list-style: none;
+    margin: 2.25rem 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .features li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 0.25rem 1.1rem;
+    border-left: 1px solid var(--line);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .features li:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .features :global(svg) {
+    color: var(--blue-700);
+  }
+
+  .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-block: 0.3rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--gold-500);
+    transition: color 0.2s;
+  }
+
+  .text-link:hover {
+    color: var(--blue-700);
+  }
+
+  /* Tablet */
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.5rem;
+    }
+
+    .photo-wrapper {
+      max-width: 600px;
+      margin-inline: auto;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 560px) {
+    .features {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .features li,
+    .features li:first-child {
+      flex-direction: row;
+      align-items: center;
+      padding: 0;
+      border: 0;
+    }
+  }
+</style>

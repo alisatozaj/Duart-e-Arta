@@ -1,0 +1,148 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="hero">
+  <img
+    class="hero-bg"
+    src="/hero.jpg"
+    alt="Një e moshuar dhe kujdestarja e saj në Qendrën Duart e Arta"
+    width="1920"
+    height="1080"
+    loading="eager"
+    decoding="async"
+  />
+  <div class="hero-overlay"></div>
+
+  <div class="container hero-content">
+    <h1>Një shtëpi plot ngrohtësi, kujdes dhe dashuri.</h1>
+
+    <p class="lead">
+      Në Duart e Arta, çdo ditë kujdesemi që të moshuarit të ndihen si në
+      shtëpinë e tyre. Me përkushtim, respekt dhe dashuri, krijojmë një ambient
+      ku çdo person ndihet i vlerësuar.
+    </p>
+
+    <div class="actions">
+      <a href="/rreth-nesh" class="btn-light">
+        Njihuni me ne
+        <Icon name="arrow-right" size={18} strokeWidth={2} />
+      </a>
+      <a href="#kontakt" class="link-light">
+        Na Kontaktoni
+        <Icon name="arrow-right" size={18} strokeWidth={2} />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    min-height: clamp(560px, 82vh, 760px);
+    padding-block: 4rem;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 70% center;
+    z-index: -2;
+  }
+
+  /* Deep blue wash from the left so the text stays readable,
+     fading out so the photo stays bright on the right */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      90deg,
+      rgba(8, 28, 56, 0.9) 0%,
+      rgba(8, 28, 56, 0.72) 38%,
+      rgba(8, 28, 56, 0.2) 70%,
+      rgba(8, 28, 56, 0) 100%
+    );
+  }
+
+  .hero-content {
+    max-width: var(--container);
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+    line-height: 1.08;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    max-width: 12em;
+  }
+
+  .lead {
+    font-size: clamp(1.02rem, 1.4vw, 1.2rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 34rem;
+    margin: 0 0 2.25rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem 2rem;
+  }
+
+  .btn-light,
+  .link-light {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .btn-light {
+    background: #f6f8fb;
+    color: var(--blue-900);
+    padding: 0.95rem 1.6rem;
+    border-radius: 10px;
+    transition: background 0.2s;
+  }
+  .btn-light:hover {
+    background: #fff;
+  }
+
+  .link-light {
+    padding-block: 0.3rem;
+    border-bottom: 2px solid var(--gold-500);
+  }
+  .link-light:hover {
+    border-bottom-color: #fff;
+  }
+
+  @media (max-width: 760px) {
+    .hero {
+      align-items: flex-end;
+      padding-block: 3rem;
+    }
+    .hero-bg {
+      object-position: 75% center;
+    }
+    .hero-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(8, 28, 56, 0.35) 0%,
+        rgba(8, 28, 56, 0.8) 55%,
+        rgba(8, 28, 56, 0.92) 100%
+      );
+    }
+  }
+</style>

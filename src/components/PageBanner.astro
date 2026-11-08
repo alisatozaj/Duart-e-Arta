@@ -1,0 +1,69 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  image: string; // wide photo, at least 1920px, file in /public
+}
+
+const { eyebrow, title, lead, image } = Astro.props;
+---
+
+<section class="banner">
+  <img src={image} alt="" width="1920" height="700" loading="eager" decoding="async" />
+  <div class="overlay"></div>
+
+  <div class="container content">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+  </div>
+</section>
+
+<style>
+  .banner {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    min-height: clamp(380px, 62vh, 580px);
+    padding-block: 4.5rem;
+    color: #fff;
+    overflow: hidden;
+  }
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      90deg,
+      rgba(8, 28, 56, 0.9) 0%,
+      rgba(8, 28, 56, 0.7) 45%,
+      rgba(8, 28, 56, 0.25) 100%
+    );
+  }
+  .eyebrow {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  h1 {
+    max-width: 16em;
+    margin-bottom: 1rem;
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    line-height: 1.08;
+    color: #fff;
+  }
+  .lead {
+    max-width: 36rem;
+    margin: 0;
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    color: rgba(255, 255, 255, 0.86);
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+// TODO: placeholder quotes. Replace them with real ones from families
+// (with their permission) before the site goes live.
+const testimonials = [
+  {
+    quote: 'Që ditën e parë, mamaja u prit me aq shumë dashuri. Tani e shohim të qetë, aktive dhe gjithmonë me buzëqeshje.',
+    name: 'Elira K.',
+    role: 'Vajza e një banoreje',
+  },
+  {
+    quote: 'Nuk gjetëm vetëm kujdes profesional, por njerëz që e trajtojnë babain tonë me respektin dhe ngrohtësinë e një familjeje.',
+    name: 'Arben M.',
+    role: 'Djali i një banori',
+  },
+  {
+    quote: 'Vizitat tona tani janë momente të bukura. E dimë që nëna është e sigurt dhe e rrethuar nga njerëz që kujdesen vërtet.',
+    name: 'Mirela D.',
+    role: 'Familjare',
+  },
+];
+---
+
+<section class="section" id="familjaret">
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow">Fjalë që na ngrohin zemrën</p>
+      <h2>Çfarë thonë familjarët</h2>
+    </header>
+
+    <div class="grid">
+      {testimonials.map(({ quote, name, role }) => (
+        <figure class="card">
+          <span class="mark" aria-hidden="true">“</span>
+          <blockquote>
+            <p>{quote}</p>
+          </blockquote>
+          <figcaption>
+            <span class="avatar" aria-hidden="true">{name[0]}</span>
+            <span>
+              <strong>{name}</strong>
+              <span class="role">{role}</span>
+            </span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .head {
+    text-align: center;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .head .eyebrow {
+    justify-content: center;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 2rem;
+    background: var(--tint);
+    border-radius: 14px;
+  }
+  .mark {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 0.8;
+    height: 1.6rem;
+    color: var(--gold-500);
+  }
+  blockquote {
+    margin: 0 0 1.75rem;
+  }
+  blockquote p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid #cbd6e4;
+  }
+  .avatar {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--blue-700);
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+  strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .role {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+      max-width: 36rem;
+      margin-inline: auto;
+    }
+  }
+</style>

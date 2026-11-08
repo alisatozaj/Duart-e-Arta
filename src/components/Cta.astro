@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+interface Props {
+  // plain = white background (use it when the section above is light blue)
+  plain?: boolean;
+}
+
+const { plain = false } = Astro.props;
+---
+
+<section class:list={['section', 'cta', { 'section--tint': !plain }]}>
+  <div class="container inner">
+    <h2>Keni pyetje? Jemi këtu për t’ju ndihmuar.</h2>
+    <p>
+      Na shkruani ose na telefononi dhe do t’ju përgjigjemi. Mund të organizojmë
+      edhe një vizitë në qendër.
+    </p>
+    <div class="actions">
+      <a href="/#kontakt" class="btn btn-primary">
+        Na kontaktoni
+        <Icon name="arrow-right" size={18} strokeWidth={2} />
+      </a>
+      <a href={site.phoneHref} class="phone">
+        <Icon name="phone" size={20} />
+        {site.phone}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  }
+  .inner {
+    max-width: 44rem;
+    text-align: center;
+  }
+  /* short gold line above the heading */
+  .inner::before {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    margin: 0 auto 1.75rem;
+    background: var(--gold-500);
+  }
+  h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+  }
+  p {
+    margin: 0 auto 2rem;
+    max-width: 34rem;
+    color: var(--muted);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem 2rem;
+  }
+  .phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    color: var(--blue-900);
+  }
+  .phone:hover {
+    color: var(--blue-700);
+  }
+  .phone :global(svg) {
+    color: var(--blue-700);
+  }
+</style>

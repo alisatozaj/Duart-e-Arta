@@ -1,0 +1,379 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageBanner from '../components/PageBanner.astro';
+import Split from '../components/Split.astro';
+import { site } from '../data/site';
+
+const values = [
+  {
+    icon: 'heart',
+    title: 'Përkushtim',
+    text: 'Kujdesi për të moshuarit dhe personat me aftësi të kufizuara kërkon vëmendje, durim dhe përgjegjësi çdo ditë.',
+  },
+  {
+    icon: 'user',
+    title: 'Respekt',
+    text: 'Çdo banor trajtohet me dinjitet, duke respektuar historinë, zakonet dhe nevojat e tij.',
+  },
+  {
+    icon: 'users',
+    title: 'Punë në ekip',
+    text: 'Drejtuesit, infermierët, kuzhinierët, kujdestarët dhe stafi sanitar bashkëpunojnë për mirëqenien e banorëve.',
+  },
+] as const;
+
+// TODO: check that these match what the center really offers its staff.
+const benefits = [
+  { icon: 'heart-handshake', title: 'Kujdes me përkushtim', text: 'Puna jonë ka në qendër mirëqenien, sigurinë dhe dinjitetin e çdo banori.' },
+  { icon: 'hand-heart', title: 'Respekt për individin', text: 'Vlerësojmë nevojat dhe veçoritë e secilit person, duke ofruar mbështetje me durim dhe mirëkuptim.' },
+  { icon: 'home', title: 'Ambient familjar', text: 'Synojmë të krijojmë një hapësirë të qetë, të pastër dhe të ngrohtë për banorët.' },
+  { icon: 'message-circle', title: 'Bashkëpunim', text: 'Besojmë se përkujdesja më e mirë arrihet kur çdo anëtar i ekipit kontribuon dhe mbështet njëri-tjetrin.' },
+] as const;
+
+// TODO: replace with the real open positions.
+const roles = [
+  { icon: 'users', title: 'Drejtor/e', text: 'Organizimi dhe koordinimi i veprimtarisë së qendrës, si dhe mbështetja e ekipit për të siguruar një shërbim të përgjegjshëm dhe cilësor.' },
+  { icon: 'stethoscope', title: 'Infermier/e', text: 'Ndjekja e gjendjes shëndetësore të banorëve dhe ofrimi i kujdesit infermieror, sipas nevojave dhe udhëzimeve përkatëse.' },
+  { icon: 'utensils', title: 'Kuzhinier/e', text: 'Përgatitja e vakteve të përditshme, duke marrë parasysh nevojat ushqimore dhe dietike të banorëve.' },
+  { icon: 'heart-handshake', title: 'Kujdestar/e', text: 'Ndihmë në aktivitetet e përditshme, higjienën personale, ushqimin dhe lëvizjen, gjithmonë me durim dhe respekt për dinjitetin e banorit.' },
+  { icon: 'sparkles', title: 'Sanitar/e', text: 'Kujdesi për pastërtinë, higjienën dhe mirëmbajtjen e ambienteve, duke kontribuar në një hapësirë të sigurt dhe të këndshme.' },
+] as const;
+
+const qualities = [
+  'Durim, qetësi dhe mirëkuptim në komunikimin me banorët',
+  'Respekt për të moshuarit dhe personat me aftësi të kufizuara',
+  'Përgjegjësi dhe përkushtim ndaj detyrave të përditshme',
+  'Aftësi për të bashkëpunuar dhe punuar në ekip',
+  'Kujdes dhe vëmendje ndaj pastërtisë, higjienës dhe sigurisë',
+];
+
+// TODO: change these steps to match how the center really hires.
+const steps = [
+  { title: 'Dërgoni CV-në', text: 'Na dërgoni CV-në tuaj me email ose na kontaktoni me telefon për të shprehur interesin tuaj.' },
+  { title: 'Bisedë e parë', text: 'Bisedojmë për përvojën, aftësitë dhe pozicionin që ju intereson.' },
+  { title: 'Njohja me qendrën', text: 'Mësoni më shumë rreth qendrës, ekipit dhe përgjegjësive të pozicionit.' },
+  { title: 'Fillimi i punës', text: 'Diskutojmë hapat e mëtejshëm dhe mënyrën e bashkëpunimit.' },
+];
+
+const mailto = `mailto:${site.email}?subject=${encodeURIComponent('Aplikim për punë')}`;
+---
+
+<Layout
+  title="Puno me Ne – Qendra e Kujdesit Duart e Arta"
+  description="Bashkohuni me ekipin e Qendrës së Kujdesit Duart e Arta. Kërkojmë njerëz me durim, respekt dhe përgjegjësi."
+>
+  <PageBanner
+    image="/img2.jpg"
+    eyebrow="Puno me Ne"
+    title="Bashkohuni me ekipin tonë"
+    lead="Në Duart e Arta, çdo rol ka rëndësi. Kërkojmë njerëz të përkushtuar që besojnë në kujdesin me respekt, durim dhe zemër."
+  />
+
+  <Split image="/img8.jpg" alt="Stafi i Qendrës Duart e Arta me një banore">
+    <h2 class="split-title">Një punë me kuptim</h2>
+    <p class="body">
+      Në Qendrën e Kujdesit Duart e Arta, puna jonë ka një qëllim të përbashkët:
+      t'u ofrojmë të moshuarve dhe personave me aftësi të kufizuara një ambient
+      të sigurt, të qetë dhe familjar.
+    </p>
+    <p class="body">
+      Besojmë se kujdesi nuk është vetëm një detyrë apo shërbim. Ai kërkon
+      përkushtim, respekt, durim dhe mirëkuptim. Çdo ditë, përpiqemi që banorët
+      të ndihen të dëgjuar, të vlerësuar dhe të trajtuar me dinjitet.
+    </p>
+    <p class="body">
+      Puna jonë realizohet përmes bashkëpunimit të një ekipi me role të
+      ndryshme, ku secili kontribuon në mirëqenien e banorëve. Nga kujdesi
+      shëndetësor dhe ndihma në aktivitetet e përditshme, deri te ushqimi dhe
+      higjiena, çdo përgjegjësi është e rëndësishme.
+    </p>
+    <p class="body">
+      Nëse ndani të njëjtat vlera dhe dëshironi të bëheni pjesë e një pune
+      që ka ndikim në jetën e njerëzve, ju ftojmë të njiheni me mundësitë
+      për t'u bashkuar me ekipin tonë.
+    </p>
+  </Split>
+
+  <section class="section section--tint">
+    <div class="container">
+      <h2>Çfarë vlerësojmë</h2>
+      <ul class="values">
+        {values.map(({ icon, title, text }) => (
+          <li>
+            <Icon name={icon} size={28} />
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Çfarë na bashkon</h2>
+      <ul class="values benefits">
+        {benefits.map(({ icon, title, text }) => (
+          <li>
+            <Icon name={icon} size={28} />
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <h2>Profilet e ekipit tonë</h2>
+      <p class="lead intro">
+        Përkujdesja në qendrën tonë mbështetet në bashkëpunimin e disa profileve
+        profesionale. Secili anëtar ka një rol të rëndësishëm në krijimin e një
+        ambienti të sigurt, të pastër dhe familjar për banorët.
+      </p>
+      <ul class="roles">
+        {roles.map(({ icon, title, text }) => (
+          <li>
+            <Icon name={icon} size={28} />
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <h2>Çfarë presim nga ju</h2>
+        <p class="lead">
+          Përkujdesja e mirë fillon me mënyrën si i trajtojmë njerëzit.
+          Për ne, karakteri, përgjegjësia dhe respekti janë po aq të
+          rëndësishme sa aftësitë profesionale.
+        </p>
+      </div>
+      <ul class="checks">
+        {qualities.map((q) => (
+          <li>
+            <Icon name="check" size={20} strokeWidth={2.2} />
+            <span>{q}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <h2>Si funksionon procesi</h2>
+      <ol class="steps">
+        {steps.map(({ title, text }, i) => (
+          <li>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="apliko">
+    <div class="container narrow">
+      <h2>Si të aplikoni</h2>
+      <p class="lead">
+        Nëse dëshironi të bëheni pjesë e ekipit të Duart e Arta, na dërgoni
+        CV-në tuaj me email ose na kontaktoni me telefon. Jemi të gatshëm
+        të bisedojmë me ju rreth përvojës dhe mundësive për bashkëpunim.
+      </p>
+      <div class="actions">
+        <a href={mailto} class="btn btn-primary">
+          Dërgoni CV-në
+          <Icon name="arrow-right" size={18} strokeWidth={2} />
+        </a>
+        <a href={site.phoneHref} class="text-link">{site.phone}</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .narrow {
+    max-width: 46rem;
+  }
+  h2 {
+    margin-bottom: 2.5rem;
+  }
+  .lead {
+    margin: 0 0 2rem;
+    font-size: 1.15rem;
+    color: var(--muted);
+  }
+
+  .values {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem clamp(2rem, 5vw, 4rem);
+  }
+  .values li {
+    padding-top: 1.5rem;
+    border-top: 1px solid #cbd6e4;
+  }
+  .values :global(svg) {
+    color: var(--blue-700);
+    margin-bottom: 1rem;
+  }
+  .values h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+  }
+  .values p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .split-title {
+    margin-bottom: 1.25rem;
+  }
+  .body {
+    margin: 0 0 1rem;
+    max-width: 34rem;
+    color: var(--muted);
+  }
+  .intro {
+    margin-top: -1rem;
+    max-width: 38rem;
+  }
+  .benefits {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .benefits p {
+    font-size: 0.97rem;
+  }
+
+  .roles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .roles li {
+    padding: 1.75rem 1.6rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .roles :global(svg) {
+    margin-bottom: 1rem;
+    color: var(--blue-700);
+  }
+  .roles h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.15rem;
+  }
+  .roles p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.97rem;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .two-col h2 {
+    margin-bottom: 1.25rem;
+  }
+  .two-col .lead {
+    margin: 0;
+  }
+  .checks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .checks li {
+    display: flex;
+    gap: 0.9rem;
+    padding-block: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .checks li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .checks :global(svg) {
+    flex: none;
+    margin-top: 0.2rem;
+    color: var(--blue-700);
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem clamp(1.5rem, 4vw, 3rem);
+  }
+  .steps li {
+    padding-top: 1.5rem;
+    border-top: 1px solid #cbd6e4;
+  }
+  .num {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--blue-700);
+  }
+  .steps h3 {
+    margin-bottom: 0.4rem;
+    font-size: 1.15rem;
+  }
+  .steps p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.97rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+  }
+
+  @media (max-width: 960px) {
+    .benefits,
+    .steps {
+      grid-template-columns: 1fr 1fr;
+    }
+    .roles {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 760px) {
+    .values,
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .benefits,
+    .steps,
+    .roles {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

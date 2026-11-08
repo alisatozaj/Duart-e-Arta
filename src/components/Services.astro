@@ -1,0 +1,107 @@
+---
+import Icon from './Icon.astro';
+
+const services = [
+  { icon: 'bed', title: 'Banim dhe fjetje', text: 'Dhoma të rehatshme, të qeta dhe të mbushura me dritë.' },
+  { icon: 'utensils', title: 'Ushqim i shëndetshëm', text: 'Menu të freskëta e të balancuara, përgatitur çdo ditë.' },
+  { icon: 'user', title: 'Kujdes personal', text: 'Ndihmë e kujdesshme për rutinën dhe nevojat e përditshme.' },
+  { icon: 'stethoscope', title: 'Kujdes mjekësor', text: 'Monitorim i vazhdueshëm shëndetësor nga profesionistë.' },
+  { icon: 'activity', title: 'Terapi dhe fizioterapi', text: 'Lëvizje dhe terapi të përshtatura për çdo banor.' },
+  { icon: 'message-circle', title: 'Mbështetje psikologjike', text: 'Biseda, mirëkuptim dhe mbështetje emocionale.' },
+  { icon: 'music', title: 'Aktivitete dhe argëtim', text: 'Ditë aktive me muzikë, lojëra, art dhe shoqëri.' },
+  { icon: 'heart', title: 'Kujdes për demencën', text: 'Kujdes i specializuar në një mjedis të qetë e të sigurt.' },
+] as const;
+---
+
+<section class="section section--tint" id="sherbimet">
+  <div class="container">
+    <header class="head">
+      <div>
+        <p class="eyebrow">Shërbimet tona</p>
+        <h2>Kujdesi që meritojnë.</h2>
+      </div>
+      <p class="sub">
+        Çdo shërbim është i menduar për rehatinë, shëndetin dhe dinjitetin e
+        banorëve tanë.
+      </p>
+    </header>
+
+    <ul class="list">
+      {services.map(({ icon, title, text }) => (
+        <li>
+          <Icon name={icon} size={28} />
+          <div>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem clamp(2rem, 6vw, 5rem);
+    align-items: end;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .head .eyebrow {
+    margin-bottom: 1rem;
+  }
+  .sub {
+    margin: 0;
+    max-width: 28rem;
+    color: var(--muted);
+  }
+
+  /* Plain rows separated by hairlines, no boxes */
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(2rem, 6vw, 5rem);
+    border-bottom: 1px solid #cbd6e4;
+  }
+  .list li {
+    display: flex;
+    gap: 1.25rem;
+    padding-block: 1.75rem;
+    border-top: 1px solid #cbd6e4;
+    transition: border-color 0.2s;
+  }
+  .list li:hover {
+    border-top-color: var(--gold-500);
+  }
+  .list :global(svg) {
+    flex: none;
+    margin-top: 0.15rem;
+    color: var(--blue-700);
+  }
+  .list h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.35rem;
+  }
+  .list p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.97rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 760px) {
+    .head,
+    .list {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .list li {
+      transition: none;
+    }
+  }
+</style>

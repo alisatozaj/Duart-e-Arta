@@ -1,0 +1,220 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageBanner from '../components/PageBanner.astro';
+import Cta from '../components/Cta.astro';
+import { categories, photos } from '../data/gallery';
+---
+
+<Layout
+  title="Galeria – Qendra e Kujdesit Duart e Arta"
+  description="Foto nga dhomat, aktivitetet, kopshti dhe vaktet në Qendrën e Kujdesit Duart e Arta."
+>
+  <PageBanner
+    image="/about-1.jpg"
+    eyebrow="Galeria"
+    title="Jeta në Duart e Arta"
+    lead="Momente nga përditshmëria jonë: dhomat, aktivitetet, kopshti dhe tavolina."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="filters" role="group" aria-label="Filtro fotot">
+        {categories.map(({ id, label }) => (
+          <button type="button" data-filter={id} aria-pressed={id === 'all' ? 'true' : 'false'}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <ul class="grid">
+        {photos.map((photo) => (
+          <li data-category={photo.category}>
+            <button
+              type="button"
+              class="tile"
+              data-open
+              data-src={photo.src}
+              data-alt={photo.alt}
+              data-caption={photo.caption}
+              aria-label={`Hap foton: ${photo.caption}`}
+            >
+              <img src={photo.src} alt={photo.alt} width="800" height="600" loading="lazy" decoding="async" />
+              <span class="caption">{photo.caption}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Cta />
+
+  <dialog id="lightbox" aria-label="Foto e zmadhuar">
+    <button type="button" class="close" data-close aria-label="Mbyll">×</button>
+    <img src="" alt="" />
+    <p></p>
+  </dialog>
+</Layout>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+  .filters button {
+    padding: 0.6rem 1.2rem;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: transparent;
+    border: 1.5px solid var(--line);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .filters button:hover {
+    border-color: var(--blue-700);
+  }
+  .filters button[aria-pressed='true'] {
+    background: var(--blue-700);
+    border-color: var(--blue-700);
+    color: #fff;
+  }
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.75rem;
+  }
+  .tile {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    cursor: zoom-in;
+  }
+  .tile img {
+    display: block;
+    width: 100%;
+    /* the height="600" attribute would otherwise stretch the photo vertically */
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .tile:hover img {
+    transform: scale(1.03);
+  }
+  .tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8, 28, 56, 0.6), transparent 50%);
+    pointer-events: none;
+  }
+  .caption {
+    position: absolute;
+    left: 1rem;
+    bottom: 0.9rem;
+    z-index: 1;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.97rem;
+  }
+
+  /* Enlarged photo */
+  dialog {
+    max-width: min(92vw, 960px);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+  }
+  dialog::backdrop {
+    background: rgba(8, 28, 56, 0.88);
+  }
+  dialog img {
+    display: block;
+    max-width: 100%;
+    max-height: 78vh;
+    margin-inline: auto;
+    border-radius: 10px;
+  }
+  dialog p {
+    margin: 0.9rem 0 0;
+    text-align: center;
+    font-weight: 600;
+  }
+  .close {
+    position: absolute;
+    top: -2.75rem;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: #fff;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile img {
+      transition: none;
+    }
+    .tile:hover img {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Category filter
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const items = document.querySelectorAll<HTMLElement>('[data-category]');
+
+  filterButtons.forEach((button) =>
+    button.addEventListener('click', () => {
+      const value = button.dataset.filter;
+      filterButtons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+      items.forEach((item) => {
+        item.hidden = value !== 'all' && item.dataset.category !== value;
+      });
+    })
+  );
+
+  // Enlarged photo (native <dialog>: Esc closes it)
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+
+  if (dialog) {
+    const image = dialog.querySelector('img')!;
+    const caption = dialog.querySelector('p')!;
+
+    document.querySelectorAll<HTMLButtonElement>('[data-open]').forEach((button) =>
+      button.addEventListener('click', () => {
+        image.src = button.dataset.src ?? '';
+        image.alt = button.dataset.alt ?? '';
+        caption.textContent = button.dataset.caption ?? '';
+        dialog.showModal();
+      })
+    );
+
+    dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+    // a click on the dark area outside the photo closes it
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+</script>
